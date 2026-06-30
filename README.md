@@ -1,4 +1,4 @@
-# StreamFlix
+# Cinery
 
 > Plateforme de catalogue de films type Netflix, avec comptes utilisateurs et listes personnalisées (favoris, déjà vus, à voir).
 
@@ -36,7 +36,7 @@ Le projet **n'implémente pas de streaming vidéo réel** : il se concentre sur 
 ## 📐 Architecture
 
 ```
-streamflix/
+Cinery/
 ├── app/                    # App Router Next.js 15
 │   ├── (auth)/             # Pages d'authentification (login, signup)
 │   ├── (main)/             # Pages principales (accueil, recherche)
@@ -159,8 +159,8 @@ enum MovieStatus {
 
 ```bash
 # Cloner le repo
-git clone https://github.com/RIZIWYX/streamflix.git
-cd streamflix
+git clone https://github.com/RIZIWYX/Cinery.git
+cd Cinery
 
 # Installer les dépendances
 npm install
