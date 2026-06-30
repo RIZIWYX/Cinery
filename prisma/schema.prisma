@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String      @id @default(cuid())
+  email     String      @unique
+  name      String?
+  image     String?
+  createdAt DateTime    @default(now())
+  lists     UserMovie[]
+}
+
+model UserMovie {
+  id      String      @id @default(cuid())
+  userId  String
+  movieId Int
+  status  MovieStatus
+  addedAt DateTime    @default(now())
+  user    User        @relation(fields: [userId], references: [id])
+
+  @@unique([userId, movieId, status])
+}
+
+enum MovieStatus {
+  FAVORITE
+  WATCHED
+  TO_WATCH
+}
