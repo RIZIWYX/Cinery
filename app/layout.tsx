@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 import SearchBar from "@/components/SearchBar";
 import "./globals.css";
 
@@ -21,7 +22,9 @@ export default function RootLayout({
             <Link href="/" className="text-xl sm:text-2xl font-bold tracking-tight hover:text-neutral-300">
               Cinery
             </Link>
-            <SearchBar />
+            <Suspense fallback={<div className="w-full sm:max-w-md h-10" />}>
+              <SearchBar />
+            </Suspense>
           </div>
         </nav>
 
