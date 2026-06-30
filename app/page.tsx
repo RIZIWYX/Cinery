@@ -15,22 +15,13 @@ export default async function HomePage() {
   ]);
 
   return (
-    <main className="min-h-screen bg-black text-white">
-      <header className="px-4 sm:px-8 py-6 border-b border-neutral-800">
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
-          Cinery
-        </h1>
-        <p className="text-sm text-neutral-400 mt-1">
-          Le catalogue de films selon vous.
-        </p>
-      </header>
-
+    <main className="min-h-screen">
       <MovieRow title="Tendances de la semaine" movies={trending} />
       <MovieRow title="Films populaires en ce moment" movies={popular} />
-      <MovieRow title="Au cinéma près de chez vous" movies={nowPlaying} />
-      <MovieRow title="Les mieux notés de tous les temps" movies={topRated} />
+      <MovieRow title="Au cinema pres de chez vous" movies={nowPlaying} />
+      <MovieRow title="Les mieux notes de tous les temps" movies={topRated} />
 
-     <footer className="px-4 sm:px-8 py-8 text-center text-xs text-neutral-500 border-t border-neutral-800 mt-8">
+      <footer className="px-4 sm:px-8 py-8 text-center text-xs text-neutral-500 border-t border-neutral-800 mt-8">
         <p>
           Donnees fournies par <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">The Movie Database (TMDB)</a>.
         </p>
