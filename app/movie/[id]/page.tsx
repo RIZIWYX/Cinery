@@ -4,12 +4,16 @@ import { notFound } from "next/navigation";
 import MovieGrid from "@/components/MovieGrid";
 import CastCard from "@/components/CastCard";
 import MovieActions from "@/components/MovieActions";
+import TrailerModal from "@/components/TrailerModal";
+import WatchProviders from "@/components/WatchProviders";
 import { auth } from "@/lib/auth";
 import { getMovieStatusForUser } from "@/lib/actions";
 import {
   getMovieDetails,
   getMovieCredits,
   getSimilarMovies,
+  getMovieVideos,
+  getWatchProviders,
   getBackdropUrl,
   getPosterUrl,
 } from "@/lib/tmdb";
@@ -52,13 +56,15 @@ export default async function MoviePage({ params }: PageProps) {
     notFound();
   }
 
-  let movie, cast, similar;
+  let movie, cast, similar, videos, providers;
 
   try {
-    [movie, cast, similar] = await Promise.all([
+    [movie, cast, similar, videos, providers] = await Promise.all([
       getMovieDetails(movieId),
       getMovieCredits(movieId),
       getSimilarMovies(movieId),
+      getMovieVideos(movieId),
+      getWatchProviders(movieId),
     ]);
   } catch {
     notFound();
@@ -75,6 +81,8 @@ export default async function MoviePage({ params }: PageProps) {
   const year = movie.releaseDate ? movie.releaseDate.slice(0, 4) : "";
   const rating = movie.voteAverage.toFixed(1);
   const runtime = formatRuntime(movie.runtime);
+
+  const trailer = videos[0];
 
   return (
     <main className="min-h-screen bg-black text-white">
@@ -143,6 +151,12 @@ export default async function MoviePage({ params }: PageProps) {
               </div>
             )}
 
+            {trailer && (
+              <div className="mt-4">
+                <TrailerModal videoKey={trailer.key} videoName={trailer.name} />
+              </div>
+            )}
+
             <MovieActions
               movieId={movieId}
               initialStatuses={userStatuses}
@@ -173,6 +187,8 @@ export default async function MoviePage({ params }: PageProps) {
           </div>
         </section>
       )}
+
+      <WatchProviders providers={providers} />
 
       <MovieGrid title="Films similaires" movies={similar.slice(0, 12)} />
 

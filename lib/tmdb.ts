@@ -37,6 +37,31 @@ export type CastMember = {
   profilePath: string | null;
 };
 
+/** Une video (bande-annonce, teaser, etc.). */
+export type MovieVideo = {
+  id: string;
+  key: string;
+  name: string;
+  site: string;
+  type: string;
+  official: boolean;
+};
+
+/** Une plateforme de streaming ou d'achat. */
+export type WatchProvider = {
+  providerId: number;
+  providerName: string;
+  logoPath: string | null;
+};
+
+/** Toutes les options de visionnage pour un film. */
+export type WatchProviders = {
+  link: string | null;
+  flatrate: WatchProvider[];
+  rent: WatchProvider[];
+  buy: WatchProvider[];
+};
+
 /** Representation brute de l'API TMDB. */
 type TMDBMovieRaw = {
   id: number;
@@ -110,7 +135,6 @@ export async function getTopRatedMovies(): Promise<Movie[]> {
   return data.results.map(toMovie);
 }
 
-/** Details complets d'un film par son ID TMDB. */
 export async function getMovieDetails(id: number): Promise<MovieDetails> {
   type DetailsResponse = TMDBMovieRaw & {
     runtime: number | null;
@@ -132,7 +156,6 @@ export async function getMovieDetails(id: number): Promise<MovieDetails> {
   };
 }
 
-/** Casting principal d'un film. */
 export async function getMovieCredits(id: number): Promise<CastMember[]> {
   type CreditsResponse = {
     cast: {
@@ -155,7 +178,6 @@ export async function getMovieCredits(id: number): Promise<CastMember[]> {
   }));
 }
 
-/** Films similaires a un film donne. */
 export async function getSimilarMovies(id: number): Promise<Movie[]> {
   const data = await fetchTMDB<TMDBListResponse>(
     `/movie/${id}/similar?language=fr-FR`
@@ -163,7 +185,6 @@ export async function getSimilarMovies(id: number): Promise<Movie[]> {
   return data.results.map(toMovie);
 }
 
-/** Recherche de films par titre. */
 export async function searchMovies(query: string): Promise<Movie[]> {
   if (!query.trim()) {
     return [];
@@ -174,6 +195,112 @@ export async function searchMovies(query: string): Promise<Movie[]> {
     `/search/movie?query=${encoded}&language=fr-FR&include_adult=false`
   );
   return data.results.map(toMovie);
+}
+
+/** Recupere les videos (bandes-annonces, teasers) d'un film. */
+export async function getMovieVideos(id: number): Promise<MovieVideo[]> {
+  type VideosResponse = {
+    results: {
+      id: string;
+      key: string;
+      name: string;
+      site: string;
+      type: string;
+      official: boolean;
+      iso_639_1: string;
+    }[];
+  };
+
+  // On essaie d'abord en francais
+  const dataFr = await fetchTMDB<VideosResponse>(
+    `/movie/${id}/videos?language=fr-FR`
+  );
+
+  let videos = dataFr.results;
+
+  // Si aucune video en francais, on tente en anglais
+  if (videos.length === 0) {
+    const dataEn = await fetchTMDB<VideosResponse>(
+      `/movie/${id}/videos?language=en-US`
+    );
+    videos = dataEn.results;
+  }
+
+  return videos
+    .filter((v) => v.site === "YouTube")
+    .sort((a, b) => {
+      // Priorite : Trailer officiel > Trailer > Teaser > autres
+      const typeScore = (v: typeof a) => {
+        if (v.type === "Trailer" && v.official) return 4;
+        if (v.type === "Trailer") return 3;
+        if (v.type === "Teaser") return 2;
+        return 1;
+      };
+      return typeScore(b) - typeScore(a);
+    })
+    .map((v) => ({
+      id: v.id,
+      key: v.key,
+      name: v.name,
+      site: v.site,
+      type: v.type,
+      official: v.official,
+    }));
+}
+
+/** Recupere les plateformes de streaming pour un film (region FR). */
+export async function getWatchProviders(id: number): Promise<WatchProviders> {
+  type ProvidersResponse = {
+    results: {
+      FR?: {
+        link: string;
+        flatrate?: {
+          provider_id: number;
+          provider_name: string;
+          logo_path: string | null;
+        }[];
+        rent?: {
+          provider_id: number;
+          provider_name: string;
+          logo_path: string | null;
+        }[];
+        buy?: {
+          provider_id: number;
+          provider_name: string;
+          logo_path: string | null;
+        }[];
+      };
+    };
+  };
+
+  const data = await fetchTMDB<ProvidersResponse>(
+    `/movie/${id}/watch/providers`
+  );
+
+  const fr = data.results.FR;
+
+  if (!fr) {
+    return { link: null, flatrate: [], rent: [], buy: [] };
+  }
+
+  function mapProvider(p: {
+    provider_id: number;
+    provider_name: string;
+    logo_path: string | null;
+  }): WatchProvider {
+    return {
+      providerId: p.provider_id,
+      providerName: p.provider_name,
+      logoPath: p.logo_path,
+    };
+  }
+
+  return {
+    link: fr.link ?? null,
+    flatrate: (fr.flatrate ?? []).map(mapProvider),
+    rent: (fr.rent ?? []).map(mapProvider),
+    buy: (fr.buy ?? []).map(mapProvider),
+  };
 }
 
 export function getPosterUrl(
@@ -196,7 +323,6 @@ export function getBackdropUrl(
   return `${TMDB_IMAGE_BASE}/${size}${backdropPath}`;
 }
 
-/** Construit l'URL d'une photo de profil d'acteur. */
 export function getProfileUrl(
   profilePath: string | null,
   size: "w185" | "h632" | "original" = "w185"
@@ -205,4 +331,14 @@ export function getProfileUrl(
     return "/placeholder-profile.png";
   }
   return `${TMDB_IMAGE_BASE}/${size}${profilePath}`;
+}
+
+export function getLogoUrl(
+  logoPath: string | null,
+  size: "w45" | "w92" | "w154" | "w185" | "original" = "w92"
+): string {
+  if (!logoPath) {
+    return "/placeholder-logo.png";
+  }
+  return `${TMDB_IMAGE_BASE}/${size}${logoPath}`;
 }
