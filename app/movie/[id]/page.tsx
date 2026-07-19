@@ -3,6 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import MovieGrid from "@/components/MovieGrid";
 import CastCard from "@/components/CastCard";
+import MovieActions from "@/components/MovieActions";
+import { auth } from "@/lib/auth";
+import { getMovieStatusForUser } from "@/lib/actions";
 import {
   getMovieDetails,
   getMovieCredits,
@@ -60,6 +63,12 @@ export default async function MoviePage({ params }: PageProps) {
   } catch {
     notFound();
   }
+
+  const session = await auth();
+  const isAuthenticated = !!session?.user?.email;
+  const userStatuses = isAuthenticated
+    ? await getMovieStatusForUser(movieId)
+    : [];
 
   const backdropUrl = getBackdropUrl(movie.backdropPath);
   const posterUrl = getPosterUrl(movie.posterPath);
@@ -133,6 +142,12 @@ export default async function MoviePage({ params }: PageProps) {
                 ))}
               </div>
             )}
+
+            <MovieActions
+              movieId={movieId}
+              initialStatuses={userStatuses}
+              isAuthenticated={isAuthenticated}
+            />
 
             {movie.overview && (
               <div className="mt-6">

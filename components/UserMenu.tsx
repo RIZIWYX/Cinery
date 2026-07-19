@@ -28,6 +28,13 @@ export default async function UserMenu() {
   return (
     <div className="flex items-center gap-3">
       <Link
+        href="/lists"
+        className="hidden sm:inline text-sm text-neutral-300 hover:text-white transition-colors"
+      >
+        Mes listes
+      </Link>
+
+      <Link
         href="/profile"
         className="flex items-center gap-2 hover:opacity-80 transition-opacity"
       >
