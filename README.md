@@ -1,4 +1,3 @@
-````markdown
 # 🎬 CINERY
 
 Cinery est une plateforme web de découverte cinématographique permettant d'explorer des films, séries et animés, de rechercher des contenus et de gérer une liste personnelle.
