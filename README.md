@@ -459,5 +459,3 @@ Projet réalisé dans le cadre de mon parcours en développement informatique et
 
 Projet personnel réalisé à des fins d'apprentissage et de portfolio.
 
-```
-```
