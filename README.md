@@ -1,196 +1,464 @@
-# Cinery
+````markdown
+# 🎬 CINERY
 
-> Plateforme de catalogue de films type Netflix, avec comptes utilisateurs et listes personnalisées (favoris, déjà vus, à voir).
+Cinery est une plateforme web de découverte cinématographique permettant d'explorer des films, séries et animés, de rechercher des contenus et de gérer une liste personnelle.
 
-**🚧 Projet en cours de développement.** Ce README documente la stack technique choisie, l'architecture cible et la roadmap des sprints.
+Le projet a été développé avec une approche full-stack moderne en utilisant Next.js, React, TypeScript, PostgreSQL et Prisma.
 
----
+> ⚠️ Cinery est une plateforme de découverte et de gestion de contenus. Elle ne permet pas de regarder directement les films ou séries.
 
-## 🎯 Objectif du projet
+## ✨ Fonctionnalités
 
-Construire une application web moderne pour explorer un catalogue de films, créer un compte, et gérer ses propres listes (favoris, déjà vus, à voir). Le projet a un double objectif :
+### 🎥 Découverte
 
-1. **Apprentissage** : maîtriser une stack frontend / backend moderne (Next.js, TypeScript, Tailwind, Prisma).
-2. **Portfolio** : produire un projet déployé en ligne, avec authentification, base de données et consommation d'une API externe.
+- Page d'accueil présentant différents contenus
+- Exploration de films, séries et animés
+- Consultation des informations détaillées d'un film
+- Affichage du casting
+- Accès aux bandes-annonces
+- Affichage des plateformes permettant de regarder un contenu
 
-Le projet **n'implémente pas de streaming vidéo réel** : il se concentre sur le catalogue, les comptes et les listes. Les données de films proviennent de l'API publique [TMDB](https://www.themoviedb.org/documentation/api).
+### 🔎 Recherche
 
----
+- Recherche de contenus
+- Affichage des résultats sous forme de grille
+- Accès à la page détaillée de chaque film
 
-## 🛠 Stack technique
+### 👤 Authentification
 
-| Couche                   | Choix                       | Pourquoi                                                                 |
-|--------------------------|-----------------------------|--------------------------------------------------------------------------|
-| Framework                | **Next.js 15** (App Router) | Full-stack JS moderne : routing, API routes, Server Components intégrés. |
-| Langage                  | **TypeScript**              | Typage statique, plus sûr et lisible que JavaScript.                     |
-| Style                    | **Tailwind CSS**            | Utility-first, rapide à mettre en place, standard de l'industrie.        |
-| ORM                      | **Prisma**                  | Migrations versionnées, requêtes typées, schéma déclaratif.              |
-| Base de données (dev)    | **SQLite**                  | Zéro configuration en local.                                             |
-| Base de données (prod)   | **PostgreSQL** (Neon)       | Hébergement gratuit, production-ready.                                   |
-| Authentification         | **Auth.js (NextAuth v5)**   | OAuth (Google, GitHub) + sessions sécurisées, intégration Next native.   |
-| Source des films         | **API TMDB**                | Catalogue mondial, posters HD, gratuit avec clé API.                     |
-| Déploiement              | **Vercel**                  | CI/CD automatique depuis GitHub, gratuit, créateurs de Next.js.          |
+- Connexion utilisateur
+- Gestion des sessions
+- Gestion des comptes associés à un utilisateur
+- Authentification avec NextAuth
 
----
+### 📚 Listes personnelles
 
-## 📐 Architecture
+Chaque utilisateur connecté peut gérer ses propres listes :
 
-```
-Cinery/
-├── app/                    # App Router Next.js 15
-│   ├── (auth)/             # Pages d'authentification (login, signup)
-│   ├── (main)/             # Pages principales (accueil, recherche)
-│   │   ├── page.tsx        # Catalogue d'accueil
-│   │   ├── search/         # Recherche
-│   │   ├── movie/[id]/     # Fiche détaillée d'un film
-│   │   └── lists/          # Listes personnelles (favoris, à voir...)
-│   └── api/                # API Routes (endpoints REST internes)
+- ❤️ Favoris
+- 👁️ Déjà vus
+- 🔖 À regarder
+
+Un même film peut être présent dans plusieurs catégories.
+
+Les films sont enregistrés avec leur date d'ajout afin de conserver un ordre chronologique.
+
+### 👤 Profil
+
+- Accès au profil utilisateur
+- Gestion des contenus enregistrés
+- Informations liées au compte
+
+## 🖥️ Pages principales
+
+| Route | Description |
+|---|---|
+| `/` | Page d'accueil |
+| `/login` | Connexion |
+| `/search` | Recherche de contenus |
+| `/movie/[id]` | Détails d'un film |
+| `/lists` | Listes personnelles |
+| `/profile` | Profil utilisateur |
+| `/api/auth/[...nextauth]` | API d'authentification |
+
+## 🛠️ Technologies utilisées
+
+### Front-end
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS 4
+
+### Back-end
+
+- Next.js App Router
+- Server Actions
+- API REST
+- NextAuth
+
+### Base de données
+
+- PostgreSQL
+- Prisma ORM
+
+### API externe
+
+- TMDB API
+
+### Outils
+
+- Git
+- GitHub
+- ESLint
+- VS Code
+
+## 🏗️ Architecture
+
+```text
+cinery/
 │
-├── components/             # Composants React réutilisables
+├── app/
+│   ├── api/
+│   │   └── auth/
+│   │       └── [...nextauth]/
+│   │           └── route.ts
+│   │
+│   ├── lists/
+│   │   └── page.tsx
+│   ├── login/
+│   │   └── page.tsx
+│   ├── movie/
+│   │   └── [id]/
+│   │       └── page.tsx
+│   ├── profile/
+│   │   └── page.tsx
+│   ├── search/
+│   │   └── page.tsx
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+│
+├── components/
+│   ├── CastCard.tsx
+│   ├── LandingPage.tsx
+│   ├── MovieActions.tsx
 │   ├── MovieCard.tsx
 │   ├── MovieGrid.tsx
+│   ├── MovieRow.tsx
+│   ├── NavLinks.tsx
 │   ├── SearchBar.tsx
-│   └── ...
+│   ├── TrailerModal.tsx
+│   ├── UserMenu.tsx
+│   └── WatchProviders.tsx
 │
-├── lib/                    # Code partagé (sans UI)
-│   ├── tmdb.ts             # Client API TMDB
-│   ├── auth.ts             # Configuration NextAuth
-│   └── db.ts               # Instance Prisma
+├── lib/
+│   ├── actions.ts
+│   ├── auth.ts
+│   └── tmdb.ts
 │
 ├── prisma/
-│   └── schema.prisma       # Schéma de la base de données
+│   ├── migrations/
+│   └── schema.prisma
 │
-├── public/                 # Assets statiques (images, fonts)
+├── public/
+│   ├── header.png
+│   ├── icones.png
+│   ├── inscription.png
+│   ├── logo-nom.png
+│   └── logo.png
 │
+├── next.config.ts
+├── package.json
+├── prisma.config.ts
+├── postcss.config.mjs
+├── tsconfig.json
 └── README.md
+````
+
+## 🗄️ Base de données
+
+Cinery utilise PostgreSQL avec Prisma ORM.
+
+Le schéma contient les modèles nécessaires à l'authentification, aux sessions et à la gestion des listes personnelles.
+
+### User
+
+Représente un utilisateur.
+
+```text
+User
+├── id
+├── name
+├── email
+├── emailVerified
+├── image
+└── createdAt
 ```
 
-### Modèle de données (Prisma)
+Un utilisateur peut avoir plusieurs comptes d'authentification, sessions et films enregistrés.
 
-```prisma
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  image     String?
-  createdAt DateTime @default(now())
-  lists     UserMovie[]
-}
+### Account
 
-model UserMovie {
-  id        String      @id @default(cuid())
-  userId    String
-  movieId   Int         // ID TMDB du film
-  status    MovieStatus // FAVORITE | WATCHED | TO_WATCH
-  addedAt   DateTime    @default(now())
-  user      User        @relation(fields: [userId], references: [id])
+Stocke les comptes d'authentification associés à un utilisateur.
 
-  @@unique([userId, movieId, status])
-}
+### Session
 
-enum MovieStatus {
-  FAVORITE
-  WATCHED
-  TO_WATCH
-}
+Gère les sessions des utilisateurs.
+
+### VerificationToken
+
+Gère les tokens de vérification.
+
+### UserMovie
+
+Associe un utilisateur à un film.
+
+```text
+UserMovie
+├── id
+├── userId
+├── movieId
+├── status
+└── addedAt
 ```
 
----
+Les statuts disponibles sont :
 
-## 🗺 Roadmap
+```text
+FAVORITE
+WATCHED
+TO_WATCH
+```
 
-### Sprint 1 — Setup du projet
-- Initialiser le projet Next.js 15 avec TypeScript et Tailwind
-- Configurer Prisma + SQLite
-- Mettre en place la structure de dossiers
-- Créer un compte TMDB et obtenir une clé API
-- Variables d'environnement (`.env.local`)
-- Premier déploiement sur Vercel (page vide pour valider le pipeline)
+Une contrainte d'unicité empêche d'enregistrer plusieurs fois le même film dans la même catégorie pour un utilisateur.
 
-### Sprint 2 — Catalogue d'accueil
-- Client API TMDB (`lib/tmdb.ts`)
-- Composant `MovieCard` (poster + titre + note)
-- Composant `MovieGrid` (grille responsive)
-- Page d'accueil : films populaires, tendances, nouveautés
-- Layout général : header, navigation, footer
+## 🔐 Gestion des listes
 
-### Sprint 3 — Recherche et fiche détaillée
-- Barre de recherche en haut de page
-- Page de résultats avec pagination
-- Page film `/movie/[id]` : poster, synopsis, casting, note, bande-annonce
-- Films similaires en bas de page
+La gestion des listes est réalisée avec des Server Actions Next.js.
 
-### Sprint 4 — Authentification
-- Configuration Auth.js (NextAuth v5)
-- Login OAuth (Google + GitHub)
-- Gestion des sessions
-- Pages protégées (middleware)
-- Profil utilisateur
+Lorsqu'un utilisateur ajoute ou retire un film :
 
-### Sprint 5 — Listes personnelles
-- Boutons « ❤ Favori », « ✓ Vu », « 📌 À voir » sur chaque film
-- Pages dédiées : `/lists/favorites`, `/lists/watched`, `/lists/to-watch`
-- Persistence en base via Prisma
-- Compteurs et statistiques utilisateur
+1. La session est vérifiée.
+2. L'utilisateur est recherché dans la base de données.
+3. Le système vérifie si le film existe déjà dans la catégorie sélectionnée.
+4. Si le film existe, il est retiré.
+5. Sinon, il est ajouté.
+6. Les pages concernées sont revalidées.
 
-### Sprint 6 (bonus) — Polish
-- Mode sombre / clair
-- Skeleton loaders pendant les chargements
-- Optimisation des images Next.js
-- Tests E2E avec Playwright
-- README final avec captures d'écran
+La logique est centralisée dans :
 
----
+```text
+lib/actions.ts
+```
 
-## 🔐 Considérations de sécurité
+Un film peut également avoir plusieurs statuts simultanément, par exemple :
 
-Étant donné que ce projet manipule des comptes utilisateurs et des données personnelles, plusieurs bonnes pratiques sont appliquées dès la conception :
+```text
+FAVORITE + WATCHED
+```
 
-- **OAuth uniquement** (pas de mots de passe stockés en clair ou hashés)
-- **Validation côté serveur** de toutes les entrées utilisateur (Zod)
-- **CSRF protection** via NextAuth
-- **HTTPS forcé** en production (Vercel)
-- **Variables d'environnement** pour toutes les clés API et secrets (jamais commitées)
-- **Headers de sécurité** : Content-Security-Policy, X-Frame-Options, etc.
+## 🎨 Interface
 
----
+Cinery utilise une interface sombre, minimaliste et inspirée des plateformes cinématographiques modernes.
 
-## 🚀 Démarrage rapide (dès que le Sprint 1 sera complété)
+### Palette
+
+| Couleur         | Code      |
+| --------------- | --------- |
+| Noir profond    | `#090909` |
+| Gris foncé      | `#1A1A1A` |
+| Bleu électrique | `#3772FF` |
+| Blanc           | `#FFFFFF` |
+
+Le bleu électrique est utilisé comme couleur d'accent pour les éléments interactifs et l'identité visuelle de Cinery.
+
+## 📱 Responsive Design
+
+L'interface est adaptée aux différentes tailles d'écran :
+
+* 💻 Ordinateur
+* 📱 Mobile
+* 📟 Tablette
+
+Tailwind CSS est utilisé pour gérer le responsive design et la mise en page.
+
+## ⚙️ Installation
+
+### 1. Cloner le projet
 
 ```bash
-# Cloner le repo
-git clone https://github.com/RIZIWYX/Cinery.git
-cd Cinery
+git clone https://github.com/VOTRE_USERNAME/cinery.git
+cd cinery
+```
 
-# Installer les dépendances
+### 2. Installer les dépendances
+
+```bash
 npm install
+```
 
-# Copier le fichier d'environnement et le remplir
-cp .env.example .env.local
-# Ajouter : TMDB_API_KEY, NEXTAUTH_SECRET, etc.
+### 3. Configurer les variables d'environnement
 
-# Initialiser la base de données
+Créer un fichier `.env.local` à la racine du projet :
+
+```env
+DATABASE_URL="votre_url_postgresql"
+AUTH_SECRET="votre_secret"
+TMDB_API_KEY="votre_cle_tmdb"
+```
+
+### 4. Générer Prisma
+
+```bash
+npx prisma generate
+```
+
+### 5. Appliquer les migrations
+
+Pour le développement :
+
+```bash
 npx prisma migrate dev
+```
 
-# Lancer le serveur de développement
+Pour la production :
+
+```bash
+npx prisma migrate deploy
+```
+
+### 6. Lancer le projet
+
+```bash
 npm run dev
 ```
 
-L'application sera disponible sur `http://localhost:3000`.
+Le projet sera disponible sur :
 
----
+```text
+http://localhost:3000
+```
 
-## 📚 Ressources
+## 🚀 Scripts disponibles
 
-- [Documentation Next.js](https://nextjs.org/docs)
-- [Documentation TMDB API](https://developer.themoviedb.org/docs)
-- [Documentation Prisma](https://www.prisma.io/docs)
-- [Documentation Auth.js](https://authjs.dev/)
-- [Documentation Tailwind CSS](https://tailwindcss.com/docs)
+| Commande                    | Description                              |
+| --------------------------- | ---------------------------------------- |
+| `npm run dev`               | Lance le serveur de développement        |
+| `npm run build`             | Compile l'application                    |
+| `npm run start`             | Lance l'application en production        |
+| `npm run lint`              | Vérifie le code avec ESLint              |
+| `npx prisma generate`       | Génère le client Prisma                  |
+| `npx prisma migrate dev`    | Applique les migrations en développement |
+| `npx prisma migrate deploy` | Applique les migrations en production    |
 
----
+## 🔑 Variables d'environnement
 
-## 👤 Auteur
+```env
+DATABASE_URL=
+AUTH_SECRET=
+TMDB_API_KEY=
+```
 
-**Rayane Graïne** — Étudiant L3 Informatique, Université de Rouen Normandie
-GitHub : [@RIZIWYX](https://github.com/RIZIWYX) · LinkedIn : [rayane-graine](https://linkedin.com/in/rayane-graine)
+### DATABASE_URL
+
+URL de connexion à la base de données PostgreSQL.
+
+### AUTH_SECRET
+
+Clé secrète utilisée pour sécuriser l'authentification et les sessions.
+
+### TMDB_API_KEY
+
+Clé permettant d'accéder aux données de l'API TMDB.
+
+> Les variables d'environnement ne doivent jamais être publiées dans le dépôt Git.
+
+## 🌐 Déploiement
+
+Cinery peut être déployé sur une plateforme compatible avec Next.js.
+
+La base de données PostgreSQL peut être hébergée séparément et connectée à l'application grâce à la variable `DATABASE_URL`.
+
+Les variables d'environnement doivent être configurées dans l'environnement de production avant le déploiement.
+
+## 🔒 Sécurité
+
+Le projet utilise plusieurs mécanismes pour protéger les données utilisateur :
+
+* Vérification de la session côté serveur
+* Accès aux listes limité à l'utilisateur connecté
+* Utilisation de Prisma pour les requêtes à la base de données
+* Variables sensibles stockées dans l'environnement
+* Contraintes d'unicité au niveau de la base de données
+* Gestion des sessions avec NextAuth
+
+## 📂 Organisation du code
+
+### `app/`
+
+Contient les pages et routes de l'application avec le système App Router de Next.js.
+
+### `components/`
+
+Contient les composants React réutilisables :
+
+* `MovieCard`
+* `MovieGrid`
+* `MovieRow`
+* `SearchBar`
+* `MovieActions`
+* `TrailerModal`
+* `UserMenu`
+* `CastCard`
+* `WatchProviders`
+
+### `lib/`
+
+Contient la logique applicative :
+
+```text
+actions.ts  → gestion des listes utilisateur
+auth.ts     → authentification et Prisma
+tmdb.ts     → communication avec TMDB
+```
+
+### `prisma/`
+
+Contient le schéma PostgreSQL et les migrations Prisma.
+
+### `public/`
+
+Contient les ressources statiques :
+
+* logos
+* icônes
+* images
+* éléments graphiques
+
+## 🎯 Objectifs du projet
+
+Ce projet m'a permis de mettre en pratique :
+
+* Le développement full-stack
+* Next.js et son App Router
+* React et TypeScript
+* PostgreSQL
+* Prisma ORM
+* L'authentification utilisateur
+* Les Server Actions
+* La consommation d'une API externe
+* Le responsive design
+* La conception d'une interface moderne
+* L'organisation d'un projet web
+* La gestion des données utilisateur
+
+## 🧰 Stack technique
+
+```text
+Next.js 16
+React 19
+TypeScript
+Tailwind CSS 4
+PostgreSQL
+Prisma 7
+NextAuth 5
+TMDB API
+ESLint
+Git / GitHub
+```
+
+## 👨‍💻 Auteur
+
+**Rayane Graïne**
+
+Étudiant en informatique à l'Université de Rouen Normandie.
+
+Projet réalisé dans le cadre de mon parcours en développement informatique et destiné à mon portfolio.
+
+## 📄 Licence
+
+Projet personnel réalisé à des fins d'apprentissage et de portfolio.
+
+```
+```
