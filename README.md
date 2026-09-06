@@ -1,5 +1,7 @@
 # 🎬 CINERY
 
+
+🌐 **Démo en ligne** : https://cinery-riziwyx.vercel.app/
 Cinery est une plateforme web de découverte cinématographique permettant d'explorer des films, séries et animés, de rechercher des contenus et de gérer une liste personnelle.
 
 Le projet a été développé avec une approche full-stack moderne en utilisant Next.js, React, TypeScript, PostgreSQL et Prisma.
