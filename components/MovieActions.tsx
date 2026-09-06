@@ -34,7 +34,7 @@ const CONFIGS: StatusConfig[] = [
     status: "TO_WATCH" as MovieStatus,
     label: "A voir",
     icon: "\u2605",
-    activeClass: "bg-blue-600 border-blue-600 text-white",
+    activeClass: "bg-cinery-accent border-cinery-accent text-white",
   },
 ];
 
@@ -51,9 +51,9 @@ export default function MovieActions({
 
   if (!isAuthenticated) {
     return (
-      <div className="mt-4 rounded-lg bg-neutral-900 border border-neutral-800 p-4 text-center">
-        <p className="text-sm text-neutral-400">
-          <a href="/login" className="text-white underline hover:text-neutral-300">
+      <div className="mt-4 rounded-lg bg-cinery-surface border border-white/10 p-4 text-center">
+        <p className="text-sm text-cinery-gray">
+          <a href="/login" className="text-cinery-accent underline hover:text-cinery-accent-hover">
             Connectez-vous
           </a>{" "}
           pour ajouter ce film a vos listes.
@@ -66,7 +66,6 @@ export default function MovieActions({
     setError(null);
     const wasActive = statuses.has(status);
 
-    // Optimistic update : on met à jour l'UI immédiatement
     const newStatuses = new Set(statuses);
     if (wasActive) {
       newStatuses.delete(status);
@@ -79,7 +78,6 @@ export default function MovieActions({
       const result = await toggleMovieInList(movieId, status);
 
       if (!result.success) {
-        // Rollback si erreur
         setStatuses(statuses);
         setError(result.error);
       }
@@ -99,7 +97,7 @@ export default function MovieActions({
               className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all disabled:opacity-50 ${
                 isActive
                   ? config.activeClass
-                  : "border-neutral-700 text-neutral-300 hover:border-neutral-500 hover:text-white"
+                  : "border-white/15 bg-cinery-surface text-cinery-gray hover:border-cinery-accent hover:text-cinery-white"
               }`}
             >
               <span>{config.icon}</span>

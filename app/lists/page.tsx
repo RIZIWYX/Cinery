@@ -41,21 +41,21 @@ export default async function ListsPage() {
     favorites.length === 0 && watched.length === 0 && toWatch.length === 0;
 
   return (
-    <main className="min-h-screen bg-black text-white px-4 sm:px-8 py-8">
+    <main className="min-h-screen text-cinery-white px-4 sm:px-8 py-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl sm:text-4xl font-bold mb-2">Mes listes</h1>
-        <p className="text-neutral-400 mb-8">
+        <p className="text-cinery-gray mb-8">
           Retrouvez vos films favoris, deja vus et a voir plus tard.
         </p>
 
         {isEmpty ? (
-          <div className="rounded-2xl border border-neutral-800 bg-neutral-950 p-8 text-center">
-            <p className="text-neutral-400 mb-4">
+          <div className="rounded-2xl border border-white/10 bg-cinery-surface p-8 text-center">
+            <p className="text-cinery-gray mb-4">
               Vous n&apos;avez pas encore ajoute de films a vos listes.
             </p>
             <Link
               href="/"
-              className="inline-block rounded-full bg-white text-black text-sm font-medium px-6 py-2 hover:bg-neutral-200 transition-colors"
+              className="inline-block rounded-full bg-cinery-accent text-cinery-white text-sm font-medium px-6 py-2 hover:bg-cinery-accent-hover transition-colors"
             >
               Explorer le catalogue
             </Link>
@@ -67,7 +67,7 @@ export default async function ListsPage() {
                 <h2 className="text-xl sm:text-2xl font-bold mb-4 flex items-center gap-2">
                   <span className="text-red-500">&#10084;</span>
                   Favoris
-                  <span className="text-sm font-normal text-neutral-500">
+                  <span className="text-sm font-normal text-cinery-gray">
                     ({favorites.length})
                   </span>
                 </h2>
@@ -80,7 +80,7 @@ export default async function ListsPage() {
                 <h2 className="text-xl sm:text-2xl font-bold mb-4 flex items-center gap-2">
                   <span className="text-green-500">&#10003;</span>
                   Deja vus
-                  <span className="text-sm font-normal text-neutral-500">
+                  <span className="text-sm font-normal text-cinery-gray">
                     ({watched.length})
                   </span>
                 </h2>
@@ -91,9 +91,9 @@ export default async function ListsPage() {
             {toWatch.length > 0 && (
               <section>
                 <h2 className="text-xl sm:text-2xl font-bold mb-4 flex items-center gap-2">
-                  <span className="text-blue-500">&#9733;</span>
+                  <span className="text-cinery-accent">&#9733;</span>
                   A voir
-                  <span className="text-sm font-normal text-neutral-500">
+                  <span className="text-sm font-normal text-cinery-gray">
                     ({toWatch.length})
                   </span>
                 </h2>

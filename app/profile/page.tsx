@@ -36,14 +36,14 @@ export default async function ProfilePage() {
     .toUpperCase();
 
   return (
-    <main className="min-h-screen bg-black text-white px-4 sm:px-8 py-8">
+    <main className="min-h-screen text-cinery-white px-4 sm:px-8 py-8">
       <div className="max-w-2xl mx-auto">
         <h1 className="text-3xl sm:text-4xl font-bold mb-8">Mon profil</h1>
 
-        <div className="bg-neutral-950 border border-neutral-800 rounded-2xl p-6 sm:p-8">
+        <div className="bg-cinery-surface/60 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
             {user.image ? (
-              <div className="relative w-24 h-24 sm:w-32 sm:h-32 overflow-hidden rounded-full shrink-0">
+              <div className="relative w-24 h-24 sm:w-32 sm:h-32 overflow-hidden rounded-full shrink-0 ring-2 ring-cinery-accent/60">
                 <Image
                   src={user.image}
                   alt={displayName}
@@ -53,22 +53,22 @@ export default async function ProfilePage() {
                 />
               </div>
             ) : (
-              <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-neutral-800 flex items-center justify-center text-3xl font-bold shrink-0">
+              <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-cinery-bg ring-2 ring-cinery-accent/60 flex items-center justify-center text-3xl font-bold shrink-0">
                 {initials}
               </div>
             )}
 
             <div className="flex-1 text-center sm:text-left">
               <h2 className="text-2xl font-bold">{displayName}</h2>
-              <p className="text-neutral-400 mt-1">{user.email}</p>
-              <p className="text-sm text-neutral-500 mt-3">
+              <p className="text-cinery-gray mt-1">{user.email}</p>
+              <p className="text-sm text-cinery-gray/70 mt-3">
                 Membre depuis le {memberSince}
               </p>
             </div>
           </div>
 
-          <div className="mt-8 pt-6 border-t border-neutral-800">
-            <h3 className="text-sm font-semibold text-neutral-400 uppercase tracking-wider mb-4">
+          <div className="mt-8 pt-6 border-t border-white/10">
+            <h3 className="text-sm font-semibold text-cinery-gray uppercase tracking-wider mb-4">
               Compte
             </h3>
 
@@ -80,7 +80,7 @@ export default async function ProfilePage() {
             >
               <button
                 type="submit"
-                className="w-full sm:w-auto rounded-lg bg-red-950 border border-red-900 text-red-300 px-4 py-2 text-sm font-medium hover:bg-red-900 hover:text-white transition-colors"
+                className="w-full sm:w-auto rounded-lg bg-cinery-bg border border-red-900/50 text-red-400 px-4 py-2 text-sm font-medium hover:bg-red-950 hover:text-red-300 hover:border-red-800 transition-colors"
               >
                 Se deconnecter
               </button>
