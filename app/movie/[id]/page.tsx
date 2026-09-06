@@ -85,7 +85,7 @@ export default async function MoviePage({ params }: PageProps) {
   const trailer = videos[0];
 
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="min-h-screen bg-cinery-bg text-cinery-white">
       <div className="relative h-[60vh] w-full">
         {movie.backdropPath && (
           <Image
@@ -97,11 +97,11 @@ export default async function MoviePage({ params }: PageProps) {
             className="object-cover"
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-cinery-bg via-cinery-bg/70 to-transparent" />
 
         <Link
           href="/"
-          className="absolute left-4 top-4 rounded-full bg-black/60 px-4 py-2 text-sm text-white backdrop-blur hover:bg-black/80"
+          className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full bg-cinery-bg/70 border border-white/10 px-4 py-2 text-sm font-medium text-cinery-white backdrop-blur hover:bg-cinery-accent hover:border-cinery-accent transition-colors"
         >
           &larr; Retour
         </Link>
@@ -122,18 +122,18 @@ export default async function MoviePage({ params }: PageProps) {
           </div>
 
           <div className="flex-1">
-            <h1 className="text-3xl sm:text-4xl font-bold text-white">
+            <h1 className="text-3xl sm:text-4xl font-bold text-cinery-white">
               {movie.title}
             </h1>
 
             {movie.tagline && (
-              <p className="mt-2 text-lg italic text-neutral-400">
+              <p className="mt-2 text-lg italic text-cinery-gray">
                 {movie.tagline}
               </p>
             )}
 
-            <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-neutral-300">
-              <span className="font-semibold text-yellow-400">&#9733; {rating}</span>
+            <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-cinery-gray">
+              <span className="font-semibold text-cinery-accent">&#9733; {rating}</span>
               {year && <span>{year}</span>}
               {runtime && <span>{runtime}</span>}
             </div>
@@ -143,7 +143,7 @@ export default async function MoviePage({ params }: PageProps) {
                 {movie.genres.map((g) => (
                   <span
                     key={g.id}
-                    className="rounded-full border border-neutral-700 px-3 py-1 text-xs text-neutral-300"
+                    className="rounded-full border border-white/15 px-3 py-1 text-xs text-cinery-gray"
                   >
                     {g.name}
                   </span>
@@ -165,8 +165,8 @@ export default async function MoviePage({ params }: PageProps) {
 
             {movie.overview && (
               <div className="mt-6">
-                <h2 className="mb-2 text-xl font-bold text-white">Synopsis</h2>
-                <p className="text-neutral-300 leading-relaxed">
+                <h2 className="mb-2 text-xl font-bold text-cinery-white">Synopsis</h2>
+                <p className="text-cinery-gray leading-relaxed">
                   {movie.overview}
                 </p>
               </div>
@@ -177,7 +177,7 @@ export default async function MoviePage({ params }: PageProps) {
 
       {cast.length > 0 && (
         <section className="px-4 sm:px-8 py-6">
-          <h2 className="mb-4 text-xl sm:text-2xl font-bold text-white">
+          <h2 className="mb-4 text-xl sm:text-2xl font-bold text-cinery-white">
             Distribution
           </h2>
           <div className="flex gap-4 overflow-x-auto pb-2">
@@ -192,9 +192,9 @@ export default async function MoviePage({ params }: PageProps) {
 
       <MovieGrid title="Films similaires" movies={similar.slice(0, 12)} />
 
-      <footer className="px-4 sm:px-8 py-8 text-center text-xs text-neutral-500 border-t border-neutral-800 mt-8">
+      <footer className="px-4 sm:px-8 py-8 text-center text-xs text-cinery-gray border-t border-white/5 mt-8">
         <p>
-          Donnees fournies par <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">The Movie Database (TMDB)</a>.
+          Donnees fournies par <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer" className="underline hover:text-cinery-accent">The Movie Database (TMDB)</a>.
         </p>
       </footer>
     </main>

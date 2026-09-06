@@ -30,7 +30,7 @@ export default function TrailerModal({ videoKey, videoName }: TrailerModalProps)
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 rounded-full bg-white text-black px-6 py-3 text-sm font-semibold hover:bg-neutral-200 transition-colors"
+        className="flex items-center gap-2 rounded-full bg-cinery-accent text-cinery-white px-6 py-3 text-sm font-semibold shadow-lg shadow-cinery-accent/30 hover:bg-cinery-accent-hover hover:scale-105 transition-all"
       >
         <span className="text-lg">&#9654;</span>
         <span>Bande-annonce</span>
@@ -38,7 +38,7 @@ export default function TrailerModal({ videoKey, videoName }: TrailerModalProps)
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-cinery-bg/90 backdrop-blur-sm p-4"
           onClick={() => setIsOpen(false)}
           role="dialog"
           aria-modal="true"
@@ -46,7 +46,7 @@ export default function TrailerModal({ videoKey, videoName }: TrailerModalProps)
         >
           <button
             onClick={() => setIsOpen(false)}
-            className="absolute right-4 top-4 rounded-full bg-black/60 text-white w-10 h-10 flex items-center justify-center text-xl hover:bg-black/80 transition-colors"
+            className="absolute right-4 top-4 rounded-full bg-cinery-surface/80 text-cinery-white w-10 h-10 flex items-center justify-center text-xl hover:bg-cinery-accent transition-colors"
             aria-label="Fermer"
           >
             &times;

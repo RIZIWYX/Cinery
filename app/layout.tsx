@@ -1,39 +1,65 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Inter } from "next/font/google";
 import { Suspense } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import SearchBar from "@/components/SearchBar";
 import UserMenu from "@/components/UserMenu";
+import NavLinks from "@/components/NavLinks";
+import { auth } from "@/lib/auth";
 import "./globals.css";
 
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-inter",
+});
+
 export const metadata: Metadata = {
-  title: "Cinery",
-  description: "Le catalogue de films selon vous.",
+  title: {
+    default: "Cinery - Le cinema, sans limites.",
+    template: "%s - Cinery",
+  },
+  description: "Decouvrez, sauvegardez et suivez vos films preferes. Le cinema, sans limites.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+  const isLoggedIn = Boolean(session?.user);
+
   return (
-    <html lang="fr">
-      <body className="bg-black text-white antialiased">
-        <nav className="sticky top-0 z-50 bg-black/90 backdrop-blur border-b border-neutral-800">
-          <div className="flex items-center justify-between gap-4 px-4 sm:px-8 py-3">
-            <Link
-              href="/"
-              className="text-xl sm:text-2xl font-bold tracking-tight hover:text-neutral-300"
-            >
-              Cinery
-            </Link>
-            <div className="flex items-center gap-4 flex-1 justify-end">
-              <Suspense fallback={<div className="w-full sm:max-w-md h-10" />}>
+    <html lang="fr" className={inter.variable}>
+      <body className="bg-cinery-bg text-cinery-white font-sans antialiased">
+        {isLoggedIn && (
+          <header className="sticky top-0 z-40 flex items-center justify-between gap-8 px-6 py-4 bg-cinery-bg/30 backdrop-blur-xl border-b border-white/5">
+            <div className="flex items-center gap-10 shrink-0">
+              <Link href="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
+                <div className="relative w-8 h-8">
+                  <Image src="/logo.png" alt="Cinery" fill sizes="32px" className="object-contain" priority />
+                </div>
+                <span className="text-xl font-bold tracking-widest text-cinery-white hidden sm:inline">CINERY</span>
+              </Link>
+
+              <NavLinks />
+            </div>
+
+            <div className="flex-1 max-w-lg">
+              <Suspense fallback={<div className="h-10" />}>
                 <SearchBar />
               </Suspense>
-              <UserMenu />
             </div>
-          </div>
-        </nav>
+
+            <UserMenu />
+          </header>
+        )}
 
         {children}
       </body>

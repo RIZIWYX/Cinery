@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { auth, signOut } from "@/lib/auth";
+import { auth } from "@/lib/auth";
 
 export default async function UserMenu() {
   const session = await auth();
@@ -9,7 +9,7 @@ export default async function UserMenu() {
     return (
       <Link
         href="/login"
-        className="rounded-full bg-white text-black text-sm font-medium px-4 py-1.5 hover:bg-neutral-200 transition-colors"
+        className="rounded-full bg-cinery-accent text-cinery-white text-sm font-medium px-4 py-1.5 hover:bg-cinery-accent-hover transition-colors"
       >
         Se connecter
       </Link>
@@ -26,51 +26,31 @@ export default async function UserMenu() {
     .toUpperCase();
 
   return (
-    <div className="flex items-center gap-3">
-      <Link
-        href="/lists"
-        className="hidden sm:inline text-sm text-neutral-300 hover:text-white transition-colors"
-      >
-        Mes listes
-      </Link>
-
-      <Link
-        href="/profile"
-        className="flex items-center gap-2 hover:opacity-80 transition-opacity"
-      >
-        {image ? (
-          <div className="relative w-8 h-8 overflow-hidden rounded-full">
-            <Image
-              src={image}
-              alt={displayName}
-              fill
-              sizes="32px"
-              className="object-cover"
-            />
-          </div>
-        ) : (
-          <div className="w-8 h-8 rounded-full bg-neutral-700 flex items-center justify-center text-xs font-semibold">
-            {initials}
-          </div>
-        )}
-        <span className="hidden sm:inline text-sm text-neutral-200">
-          {displayName}
-        </span>
-      </Link>
-
-      <form
-        action={async () => {
-          "use server";
-          await signOut({ redirectTo: "/" });
-        }}
-      >
-        <button
-          type="submit"
-          className="text-xs text-neutral-400 hover:text-white transition-colors"
-        >
-          Deconnexion
-        </button>
-      </form>
-    </div>
+    <Link
+      href="/profile"
+      className="flex items-center gap-2 group shrink-0"
+    >
+      {image ? (
+        <div className="relative w-9 h-9 overflow-hidden rounded-full ring-2 ring-cinery-accent/60 group-hover:ring-cinery-accent transition-all">
+          <Image
+            src={image}
+            alt={displayName}
+            fill
+            sizes="36px"
+            className="object-cover"
+          />
+        </div>
+      ) : (
+        <div className="w-9 h-9 rounded-full bg-cinery-surface ring-2 ring-cinery-accent/60 group-hover:ring-cinery-accent flex items-center justify-center text-xs font-semibold text-cinery-white transition-all">
+          {initials}
+        </div>
+      )}
+      <span className="hidden sm:inline text-sm font-medium tracking-wide text-cinery-white uppercase">
+        {displayName}
+      </span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3.5 h-3.5 text-cinery-gray group-hover:text-cinery-white transition-colors">
+        <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </Link>
   );
 }

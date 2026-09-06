@@ -32,22 +32,21 @@ export default function SearchBar() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="w-full sm:max-w-md">
+    <form onSubmit={onSubmit} className="w-full">
       <div className="relative">
+        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-cinery-gray">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m20 20-3.5-3.5" strokeLinecap="round" />
+          </svg>
+        </span>
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Rechercher un film..."
-          className="w-full rounded-full bg-neutral-900 border border-neutral-700 px-4 py-2 pr-10 text-sm text-white placeholder:text-neutral-500 focus:outline-none focus:border-neutral-500"
+          className="w-full rounded-full bg-cinery-surface/70 backdrop-blur-sm border border-cinery-accent/30 pl-11 pr-4 py-2.5 text-sm text-cinery-white placeholder:text-cinery-gray focus:outline-none focus:border-cinery-accent focus:bg-cinery-surface transition-colors"
         />
-        <button
-          type="submit"
-          aria-label="Rechercher"
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white"
-        >
-          &#128269;
-        </button>
       </div>
     </form>
   );

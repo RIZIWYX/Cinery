@@ -1,26 +1,56 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Palette Cinery */
+  --color-cinery-bg: #090909;
+  --color-cinery-surface: #1a1a1a;
+  --color-cinery-accent: #3772ff;
+  --color-cinery-accent-hover: #2960e6;
+  --color-cinery-gray: #b3b3b3;
+  --color-cinery-white: #ffffff;
+
+  /* Font */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html, body {
+  background-color: var(--color-cinery-bg);
+  color: var(--color-cinery-white);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% 0%, rgba(55, 114, 255, 0.15), transparent),
+    radial-gradient(ellipse 80% 50% at 100% 20%, rgba(55, 114, 255, 0.10), transparent),
+    linear-gradient(180deg, #0a0e1a 0%, #090909 60%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* Scrollbar plus discrete */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-cinery-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-cinery-surface);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2a2a2a;
+}
+
+/* Selection de texte */
+::selection {
+  background-color: var(--color-cinery-accent);
+  color: var(--color-cinery-white);
 }
