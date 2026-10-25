@@ -1,5 +1,10 @@
-# 🎬 CINERY
+# 🎬 Cinery
 
+[![Démo](https://img.shields.io/badge/d%C3%A9mo-cinery--riziwyx.vercel.app-3772FF)](https://cinery-riziwyx.vercel.app/)
+![Next.js](https://img.shields.io/badge/Next.js-16-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Prisma-336791)
+[![Licence MIT](https://img.shields.io/badge/licence-MIT-green)](LICENSE)
 
 🌐 **Démo en ligne** : https://cinery-riziwyx.vercel.app/
 
@@ -156,7 +161,7 @@ cinery/
 ├── postcss.config.mjs
 ├── tsconfig.json
 └── README.md
-````
+```
 
 ## 🗄️ Base de données
 
@@ -240,38 +245,13 @@ Un film peut également avoir plusieurs statuts simultanément, par exemple :
 FAVORITE + WATCHED
 ```
 
-## 🎨 Interface
-
-Cinery utilise une interface sombre, minimaliste et inspirée des plateformes cinématographiques modernes.
-
-### Palette
-
-| Couleur         | Code      |
-| --------------- | --------- |
-| Noir profond    | `#090909` |
-| Gris foncé      | `#1A1A1A` |
-| Bleu électrique | `#3772FF` |
-| Blanc           | `#FFFFFF` |
-
-Le bleu électrique est utilisé comme couleur d'accent pour les éléments interactifs et l'identité visuelle de Cinery.
-
-## 📱 Responsive Design
-
-L'interface est adaptée aux différentes tailles d'écran :
-
-* 💻 Ordinateur
-* 📱 Mobile
-* 📟 Tablette
-
-Tailwind CSS est utilisé pour gérer le responsive design et la mise en page.
-
 ## ⚙️ Installation
 
 ### 1. Cloner le projet
 
 ```bash
-git clone https://github.com/VOTRE_USERNAME/cinery.git
-cd cinery
+git clone https://github.com/RIZIWYX/Cinery.git
+cd Cinery
 ```
 
 ### 2. Installer les dépendances
@@ -375,49 +355,6 @@ Le projet utilise plusieurs mécanismes pour protéger les données utilisateur 
 * Contraintes d'unicité au niveau de la base de données
 * Gestion des sessions avec NextAuth
 
-## 📂 Organisation du code
-
-### `app/`
-
-Contient les pages et routes de l'application avec le système App Router de Next.js.
-
-### `components/`
-
-Contient les composants React réutilisables :
-
-* `MovieCard`
-* `MovieGrid`
-* `MovieRow`
-* `SearchBar`
-* `MovieActions`
-* `TrailerModal`
-* `UserMenu`
-* `CastCard`
-* `WatchProviders`
-
-### `lib/`
-
-Contient la logique applicative :
-
-```text
-actions.ts  → gestion des listes utilisateur
-auth.ts     → authentification et Prisma
-tmdb.ts     → communication avec TMDB
-```
-
-### `prisma/`
-
-Contient le schéma PostgreSQL et les migrations Prisma.
-
-### `public/`
-
-Contient les ressources statiques :
-
-* logos
-* icônes
-* images
-* éléments graphiques
-
 ## 🎯 Objectifs du projet
 
 Ce projet m'a permis de mettre en pratique :
@@ -435,21 +372,6 @@ Ce projet m'a permis de mettre en pratique :
 * L'organisation d'un projet web
 * La gestion des données utilisateur
 
-## 🧰 Stack technique
-
-```text
-Next.js 16
-React 19
-TypeScript
-Tailwind CSS 4
-PostgreSQL
-Prisma 7
-NextAuth 5
-TMDB API
-ESLint
-Git / GitHub
-```
-
 ## 👨‍💻 Auteur
 
 **Rayane Graïne**
@@ -460,5 +382,5 @@ Projet réalisé dans le cadre de mon parcours en développement informatique et
 
 ## 📄 Licence
 
-Projet personnel réalisé à des fins d'apprentissage et de portfolio.
+Distribué sous licence **MIT**, voir [LICENSE](LICENSE).
 
