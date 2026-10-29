@@ -6,6 +6,8 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Prisma-336791)
 [![Licence MIT](https://img.shields.io/badge/licence-MIT-green)](LICENSE)
 
+![Démo : accueil, recherche, fiche d'un film, ajout à une liste et page « Ma liste »](docs/demo.gif)
+
 Catalogue de films, séries et animés construit avec Next.js et l'API TMDB. On y cherche des contenus, on consulte leur fiche (casting, bande-annonce, plateformes de diffusion) et, une fois connecté avec Google, on gère ses propres listes.
 
 **Démo en ligne : https://cinery-riziwyx.vercel.app/**
