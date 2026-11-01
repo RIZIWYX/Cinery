@@ -71,6 +71,14 @@ npm run dev
 
 L'application est disponible sur http://localhost:3000.
 
+## Tests
+
+```bash
+npm test
+```
+
+Les tests ([Vitest](https://vitest.dev)) couvrent le client TMDB de `lib/tmdb.ts` sans appeler la vraie API : `fetch` est simulé. Ils vérifient la conversion des films, le jeton envoyé, les erreurs HTTP, la recherche vide, le tri des bandes-annonces, le repli en anglais et les plateformes de streaming. La CI les lance à chaque push.
+
 ## Organisation du dépôt
 
 | Dossier | Contenu |
@@ -78,6 +86,7 @@ L'application est disponible sur http://localhost:3000.
 | `app/` | Pages (accueil, recherche, fiche film, listes, profil) et route d'authentification |
 | `components/` | Composants React (cartes, grilles, bande-annonce, menu) |
 | `lib/` | Authentification, appels TMDB, Server Actions des listes |
+| `tests/` | Tests Vitest du client TMDB |
 | `prisma/` | Schéma et migrations de la base |
 
 ## Auteur
