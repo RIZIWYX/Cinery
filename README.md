@@ -1,5 +1,6 @@
 # Cinery
 
+[![CI](https://github.com/RIZIWYX/Cinery/actions/workflows/ci.yml/badge.svg)](https://github.com/RIZIWYX/Cinery/actions/workflows/ci.yml)
 [![Démo](https://img.shields.io/badge/d%C3%A9mo-cinery--riziwyx.vercel.app-3772FF)](https://cinery-riziwyx.vercel.app/)
 ![Next.js](https://img.shields.io/badge/Next.js-16-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
